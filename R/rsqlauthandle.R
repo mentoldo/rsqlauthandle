@@ -1,33 +1,14 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
-library(R6)
-library(config)
-library(keyring)
-
 #' Authorization class to manage authentication in SQL Databases
 #'
 #' It lets you handle and save SQL DB authentication configuration information.
-
-Sqlauth <- R6Class('Sqlauth',
+#' 
+Sqlauth <- R6::R6Class('Sqlauth',
   public = list(
     #' @field alias String identifier of the db conection.
     alias = NULL,
     #' @field fileconf The path to config file.
     fileconf = NULL,
-    #' @field A list with with the config options.
+    #' @field config A list with with the config options.
     config = NULL,
 
     #' @description
@@ -75,13 +56,11 @@ Sqlauth <- R6Class('Sqlauth',
       keyring::key_set_with_value(service = self$alias,
                                   username = user,
                                   password = passwd)
-    },
-
-    connect_db = function(){
-
     }
+
   ),
   private = list(
+    
     #' @description
     #' Initialize the config file
     #'
