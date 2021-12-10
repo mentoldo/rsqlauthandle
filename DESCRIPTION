@@ -10,6 +10,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
-    config,
+    DBI,
     keyring,
-    R6
+    R6,
+    yaml

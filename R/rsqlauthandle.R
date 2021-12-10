@@ -45,7 +45,40 @@ Sqlauth <- R6Class('Sqlauth',
         private$init_configfile()
       }
 
-      self$config = config::get(file=self$fileconf)
+      self$config = yaml::read_yaml(file=self$fileconf)
+    },
+
+    #' @description
+    #' Set the credentials to connect to SQL DB.
+    #'
+    #' Save dialect, host, port, db_name, user and app in config file. Save password
+    #' in system keyring.
+    #'
+    #' @param dialect The dialect to config ...
+    #' @param host Str. Host url of DB server.
+    #' @param port Str. Port number.
+    #' @param db_name Str. Name of database to conect.
+    #' @param user Str. User.
+    #' @param passwd Str. Password
+    set_credentials = function(dialect, host, port, db_name, user, passwd){
+      self$config$default$alias <- self$alias
+      self$config$default$dialect <- dialect
+      self$config$default$host <- host
+      self$config$default$port <- port
+      self$config$default$db_name <- db_name
+      self$config$default$user <- user
+
+      # Save configuration credentials in file
+      yaml::write_yaml(self$config,
+                 file=self$fileconf)
+
+      keyring::key_set_with_value(service = self$alias,
+                                  username = user,
+                                  password = passwd)
+    },
+
+    connect_db = function(){
+
     }
   ),
   private = list(
@@ -54,24 +87,21 @@ Sqlauth <- R6Class('Sqlauth',
     #'
     #' Create a config file in .sqlauthandle folder with the alias name.
     init_configfile = function() {
-      #file <- file.path('.rsqlauthandle', 'sqlauthandle.yml')
-      def_conf <- paste0("default:\n",
-                         "  alias:\n",
-                         "  dialect:\n",
-                         "  host:\n",
-                         "  port:\n",
-                         "  user:\n",
-                         "  db_name:")
+      config <- list(
+        default=list(
+          alias=NULL,
+          dialect=NULL,
+          host=NULL,
+          port=NULL,
+          user=NULL,
+          db_name=NULL))
 
       if(!dir.exists(dirname(self$fileconf))){
         dir.create(dirname(self$fileconf))
       }
 
-      write(def_conf, file=self$fileconf)
+      yaml::write_yaml(config, file=self$fileconf)
     }
   )
 )
-
-auth <- Sqlauth$new(resetfile = T)
-
 
