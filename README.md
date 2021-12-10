@@ -1,24 +1,13 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # rsqlauthandle
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of rsqlauthandle is to handle in a simple and secure way your sql db servers authentications.
+The goal of rsqlauthandle is to handle in a simple and secure way your
+sql db servers authentications.
 
 ## Installation
 
@@ -32,7 +21,7 @@ devtools::install_github('mentoldo/rsqlauthandle')
 
 To use rsqlauthandle in a project:
 
-```{r set_credentials, eval=FALSE}
+``` r
 library(rsqlauthandle)
 
 set_credentials(alias = 'postgres_db',
@@ -45,12 +34,14 @@ set_credentials(alias = 'postgres_db',
 
 It sets the credential for a DB conection. Then, we can use it with:
 
-```{r connect, eval=FALSE}
+``` r
 con <- connect_postgres(alias='rsqlauthandle')
 ```
-`con` is a DBIConnection object that we can use to list tables, get a table or query it.
 
-```{r read_tables, eval=FALSE}
+`con` is a DBIConnection object that we can use to list tables, get
+table or query it.
+
+``` r
 dbListTables(con)
 dbReadTable(con, 'accounts')
 dbReadTable(con, "SELECT * FROM accounts")
