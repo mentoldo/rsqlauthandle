@@ -1,5 +1,5 @@
 Package: rsqlauthandle
-Title: Authentication on SQL DB.
+Title: Authentication on SQL DB
 Version: 0.0.0.9000
 Authors@R: 
     person(c("Matías", "A."), "Alfonso", , "matias.alfonso@gmail.com", role = c("aut", "cre"),
@@ -11,6 +11,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     DBI,
+    getPass,
     keyring,
     R6,
+    RPostgres,
     yaml
